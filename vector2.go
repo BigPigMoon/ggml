@@ -1,4 +1,4 @@
-package yagml
+package ggml
 
 import (
 	"fmt"
