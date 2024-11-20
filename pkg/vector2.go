@@ -22,11 +22,10 @@ func (v Vector2) Sub(other Vector2) Vector2 {
 	return Vector2{v.X - other.X, v.Y - other.Y}
 }
 
-func (v Vector2) Multiply(other Vector2) Vector2 {
+func (v Vector2) Mul(other Vector2) Vector2 {
 	return Vector2{v.X * other.X, v.Y * other.Y}
 }
 
-func (v Vector2) Devide(other Vector2) Vector2 {
+func (v Vector2) Div(other Vector2) Vector2 {
 	return Vector2{v.X / other.X, v.Y / other.Y}
 }
-
