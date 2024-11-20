@@ -1,14 +1,9 @@
 package yagml
 
-import "testing"
-
-func TestVector2Zero(t *testing.T) {
-	vec := Vector2Zero()
-
-	if vec.X != 0 && vec.Y != 0 {
-		t.Errorf("expect vec %s but got %s", Vector2{0, 0}, vec)
-	}
-}
+import (
+	"math"
+	"testing"
+)
 
 func TestVector2Add(t *testing.T) {
 	vec1 := Vector2{0, 2}
@@ -50,10 +45,101 @@ func TestVector2Divide(t *testing.T) {
 	assertVector2Equal(t, got, wish)
 }
 
+func TestVector2Length(t *testing.T) {
+	vec := Vector2{3, 4}
+
+	got := vec.Length()
+	wish := 5.0
+
+	if got != float32(wish) {
+		t.Errorf("expect vec %.2f but got %.2f", got, wish)
+	}
+}
+
+func TestNegativeVector2Length(t *testing.T) {
+	vec := Vector2{-3, -4}
+
+	got := vec.Length()
+	wish := 5.0
+
+	if got != float32(wish) {
+		t.Errorf("expect vec %.2f but got %.2f", got, wish)
+	}
+}
+
+func TestVector2LengthSquared(t *testing.T) {
+	vec := Vector2{3, 4}
+
+	got := vec.LengthSquared()
+	wish := 25.0
+
+	if got != float32(wish) {
+		t.Errorf("expect vec %.2f but got %.2f", got, wish)
+	}
+}
+
+func TestVector2Normalized(t *testing.T) {
+	vec := Vector2{0, 2}
+
+	got := vec.Normalized()
+	wish := Vector2{0, 1}
+
+	assertVector2Equal(t, got, wish)
+}
+
+func TestZeroVector2Normalized(t *testing.T) {
+	vec := Vector2{0, 0}
+
+	got := vec.Normalized()
+	wish := Vector2{0, 0}
+
+	assertVector2Equal(t, got, wish)
+}
+
+func TestVector2Angle(t *testing.T) {
+	vec := Right
+
+	got := vec.Angle()
+	wish := float32(0.0)
+
+	if got != wish {
+		t.Errorf("expect vec %.2f but got %.2f", got, wish)
+	}
+}
+
+func TestUpVector2Angle(t *testing.T) {
+	vec := Up
+
+	got := vec.Angle()
+	wish := float32(math.Pi / 2.0)
+
+	if got != wish {
+		t.Errorf("expect vec %.2f but got %.2f", got, wish)
+	}
+}
+
+func TestVector2MoveToward(t *testing.T) {
+	vec := Right
+
+	got := vec.MoveToward(Right, 10)
+	wish := Vector2{11, 0}
+
+	assertVector2Equal(t, got, wish)
+}
+
+func TestUpVector2MoveToward(t *testing.T) {
+	vec := Zero
+
+	got := vec.MoveToward(Vector2{10, 10}, 15)
+	wish := Vector2{10, 10}
+
+	assertVector2Equal(t, got, wish)
+}
+
 func assertVector2Equal(t testing.TB, got, wish Vector2) {
 	t.Helper()
 
 	if got.X != wish.X && got.Y != wish.Y {
-		t.Errorf("expect vec %s but got %s", Vector2{2, 2}, got)
+		t.Errorf("expect '%s', but got '%s'", wish, got)
 	}
 }
